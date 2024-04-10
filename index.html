@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <title>Mnożenie macierzy</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Mnożenie macierzy</h1>
+    </header>
+    <div id="definitionArea">
+        <h2>Definicja:</h2>
+        <p>Jeśli \(A\) jest macierzą \(m \times n\), a \(B\) jest macierzą \(n \times p\),</p> 
+        <br>
+        <p>$$
+        \mathbf{A}=\left(\begin{array}{cccc}
+        a_{11} & a_{12} & \cdots & a_{1 n} \\
+        a_{21} & a_{22} & \cdots & a_{2 n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{m 1} & a_{m 2} & \cdots & a_{m n}
+        \end{array}\right), \quad \mathbf{B}=\left(\begin{array}{cccc}
+        b_{11} & b_{12} & \cdots & b_{1 p} \\
+        b_{21} & b_{22} & \cdots & b_{2 p} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        b_{n 1} & b_{n 2} & \cdots & b_{n p}
+        \end{array}\right)
+        $$</p>
+        <br>
+        <p>to iloczyn macierzy \(C = AB\)
+        (oznaczany bez znaków mnożenia lub kropek) jest zdefiniowany jako macierz \(m \times p\).</p>
+        <br>
+        <p>$$
+        \mathbf{C}=\left(\begin{array}{cccc}
+        c_{11} & c_{12} & \cdots & c_{1 p} \\
+        c_{21} & c_{22} & \cdots & c_{2 p} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        c_{m 1} & c_{m 2} & \cdots & c_{m p}
+        \end{array}\right)
+        $$</p>
+        <br>
+        <p>taka, że</p>
+        <p>$$
+        c_{i j}=a_{i 1} b_{1 j}+a_{i 2} b_{2 j}+\cdots+a_{i n} b_{n j}=\sum_{k=1}^n a_{i k} b_{k j},
+        $$</p>
+        <p>dla \(i = 1, \ldots, m\) oraz \(j = 1, \ldots, p\).</p>
+        <br>
+        <p>Oznacza to, że iloczyn uzyskuje się przez pomnożenie wyraz po wyrazie wpisów w \(i\)-tym wierszu \(A\) i \(j\)-tej
+        kolumnie \(B\) i zsumowanie tych \(n\) iloczynów. Innymi słowy, jest iloczynem skalarnym \(i\)-tego rzędu \(A\) i
+        \(j\)-tej kolumny \(B\). </p>
+        <p>Dlatego \(AB\) można również zapisać jako</p>
+        <br>
+        <p>$$
+        \mathbf{C}=\left(\begin{array}{cccc}
+        a_{11} b_{11}+\cdots+a_{1 n} b_{n 1} & a_{11} b_{12}+\cdots+a_{1 n} b_{n 2} & \cdots & a_{11} b_{1 p}+\cdots+a_{1 n}
+        b_{n p} \\
+        a_{21} b_{11}+\cdots+a_{2 n} b_{n 1} & a_{21} b_{12}+\cdots+a_{2 n} b_{n 2} & \cdots & a_{21} b_{1 p}+\cdots+a_{2 n}
+        b_{n p} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{m 1} b_{11}+\cdots+a_{m n} b_{n 1} & a_{m 1} b_{12}+\cdots+a_{m n} b_{n 2} & \cdots & a_{m 1} b_{1 p}+\cdots+a_{m n}
+        b_{n p}
+        \end{array}\right)
+        $$</p>
+        <br>
+        <p>Zatem iloczyn \(AB\) jest zdefiniowany wtedy i tylko wtedy, gdy liczba kolumn w \(A\) jest równa liczbie wierszy w
+        \(B\), w tym przypadku \(n\).</p>
+    </div>
+    <div id="inputArea">
+        <h2>Wprowadź macierze:</h2>
+        <div id="matrix1">
+            <h3>Macierz 1</h3>
+            <input type="number" id="rows1" placeholder="Liczba wierszy">
+            <input type="number" id="cols1" placeholder="Liczba kolumn">
+            <button onclick="createMatrix(1)">Utwórz macierz</button>
+            <div id="matrix1Elements"></div>
+        </div>
+        <div id="matrix2">
+            <h3>Macierz 2</h3>
+            <input type="number" id="rows2" placeholder="Liczba wierszy">
+            <input type="number" id="cols2" placeholder="Liczba kolumn">
+            <button onclick="createMatrix(2)">Utwórz macierz</button>
+            <div id="matrix2Elements"></div>
+        </div>
+        <button onclick="multiply()">Pomnóż macierze</button>
+    </div>
+    <br>
+    <div id="exampleArea">
+        <h2>Przykłady:</h2>
+        <button type="button" id="example" onclick="example1()">\begin{equation*}
+        A =
+        \begin{bmatrix}
+        2 & 1 & 3 \\
+        -1 & 2 & 4
+        \end{bmatrix} 
+        \times 
+        B =
+        \begin{bmatrix}
+        1 & 3 \\
+        2 & -2 \\
+        -1 & 4
+        \end{bmatrix}
+        \end{equation*}</button>
+
+        <button type="button" id="example" onclick="example2()">\begin{equation*}
+        A =
+        \begin{bmatrix}
+        4 & 2 & -5 \\
+        -1 & 3 & 1
+        \end{bmatrix}
+        \times
+        B =
+        \begin{bmatrix}
+        2 & 2 \\
+        2 & 2
+        \end{bmatrix}
+        \end{equation*}</button>
+    </div>
+    <br>
+    <div id="outputArea">
+        <h2>Wynik:</h2>
+        <div id="outputMatrix"></div>
+    </div>
+    <div id="stepsArea">
+        <h2>Obliczenia:</h2>
+        <div id="steps"></div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+
+</html>
